@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Carros PycodeBR{% endblock %}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-main: #14141d;
+        --bg-panel: #1f1f2e;
+        --text-primary: #e0e0e0;
+        --text-secondary: #8c8c9e;
+        --accent-purple: #7f00ff; /* Roxo vibrante */
+        --accent-cyan: #00ffff; /* Ciano elétrico */
+        --border-radius: 12px;
+        --transition-hover: 0.3s ease-in-out;
+        --shadow-glow: 0 0 15px rgba(127, 0, 255, 0.6);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: var(--bg-panel);
+        box-shadow: var(--shadow-sm);
+      }
+
+      nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+      }
+
+      nav h1 a {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text-primary);
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 15px;
+      }
+
+      nav ul li a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 15px;
+        border-radius: var(--border-radius);
+        transition: color var(--transition-hover),
+          background-color var(--transition-hover),
+          box-shadow var(--transition-hover);
+      }
+
+      nav ul li a:hover {
+        color: var(--accent-purple);
+        background-color: rgba(127, 0, 255, 0.1);
+        box-shadow: 0 0 8px rgba(127, 0, 255, 0.4);
+      }
+
+      nav ul li.active a {
+        background-color: var(--accent-purple);
+        color: var(--text-primary);
+        box-shadow: var(--shadow-glow);
+      }
+
+      main {
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 0 20px;
+      }
+
+      footer {
+        background-color: var(--bg-panel);
+        color: var(--text-secondary);
+        padding: 20px;
+        text-align: center;
+        margin-top: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1><a href="{% url 'cars_list' %}">PycodeBR</a></h1>
+        <ul>
+          <li><a href="{% url 'cars_list' %}">Galeria</a></li>
+          <li><a href="{% url 'new_car' %}">Cadastrar</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>
+      <p>&copy; 2023 PycodeBR Multimarcas. Todos os direitos reservados.</p>
+    </footer>
+  </body>
+</html>

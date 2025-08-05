@@ -1,0 +1,209 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  /* Estilos base para todos os campos de formulário */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  textarea,
+  select {
+    background-color: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-hover);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(127, 0, 255, 0.4);
+  }
+
+  /* Estilos específicos para a página de carros */
+  .car-list-header {
+    text-align: center;
+    padding: 30px 0;
+  }
+
+  .car-list-header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+
+  .car-list-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    background-color: var(--bg-panel);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .search-form input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    color: var(--text-primary);
+    padding: 15px 20px;
+    font-size: 1rem;
+    box-shadow: none; /* Resetando box-shadow para o input do search */
+    border-radius: 0;
+  }
+  .search-form input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search-form input::placeholder {
+    color: var(--text-secondary);
+  }
+
+  .search-form button {
+    background-color: var(--accent-purple);
+    color: #fff;
+    border: none;
+    padding: 0 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-hover);
+  }
+
+  .search-form button:hover {
+    background-color: #5d00a0;
+  }
+
+  .car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 10px 0;
+  }
+
+  .car-card {
+    background-color: var(--bg-panel);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform var(--transition-hover),
+      box-shadow var(--transition-hover);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .car-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 2px solid var(--bg-card);
+  }
+
+  .car-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .car-details h2 {
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .car-details p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .car-details .car-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-top: 10px;
+  }
+
+  .no-results {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    padding: 50px;
+  }
+
+  /* --- Responsividade --- */
+  @media (max-width: 768px) {
+    .car-list-header h1 {
+      font-size: 2.2rem;
+    }
+    .search-form {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .car-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="container">
+  <div class="car-list-header">
+    <h1>Galeria de Veículos</h1>
+    <p>Explore nossa seleção de carros modernos e de alta performance.</p>
+  </div>
+
+  <form class="search-form" method="GET" action="{% url 'cars_list' %}">
+    <input
+      type="text"
+      name="search"
+      placeholder="Buscar por modelo, marca ou ano..."
+    />
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div class="car-grid">
+    {% if cars %} {% for car in cars %}
+    <a href="#" class="car-card">
+      <img src="{{ car.photo.url }}" alt="{{ car.brand }} {{ car.model }}" />
+      <div class="car-details">
+        <h2>{{ car.brand }} {{ car.model }}</h2>
+        <p>{{ car.factory_year }}</p>
+        <p class="car-value">R$ {{ car.value|floatformat:2 }}</p>
+      </div>
+    </a>
+    {% endfor %} {% else %}
+    <p class="no-results">Nenhum carro encontrado.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
