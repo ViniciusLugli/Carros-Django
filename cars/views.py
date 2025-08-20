@@ -1,20 +1,22 @@
 from django.shortcuts import redirect, render
+from django.views import View
 from cars.models import Car
 from cars.forms import CarModelForm
 
-def cars_view(request):
-  cars = Car.objects.all().order_by('brand__name')
+class CarsView(View):
   
-  search = request.GET.get('search')
-  if search:
-    cars = Car.objects.filter(model__icontains=search)
-  
-  return render(
-    request, 
-    'cars.html',
-    {'cars': cars }
-  )
-  
+  def get(self, request):
+    cars = Car.objects.all().order_by('brand__name')
+    search = request.GET.get('search')
+    
+    if search:
+      cars = cars.filter(model__icontains=search)
+    
+    return render(
+      request, 
+      'cars.html',
+      {'cars': cars }
+    )
   
 def new_car_view(request):
   if request.method == 'POST':
