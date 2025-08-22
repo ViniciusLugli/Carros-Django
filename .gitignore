@@ -13,7 +13,7 @@ env/
 db.sqlite3
 
 # Arquivos de mídia enviados pelo usuário
-media/
+media/cars/
 
 # Configurações do VS Code
 .vscode/
