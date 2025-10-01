@@ -315,6 +315,7 @@
       </div>
     </div>
   </div>
+  {% if user.is_authenticated %}
   <div class="detail-actions" style="text-align: center; margin-top: 18px">
     <a
       href="{% url 'car_update' object.pk %}"
@@ -325,5 +326,6 @@
       >🗑️ Excluir</a
     >
   </div>
+  {% endif %}
 </div>
 {% endblock %}
