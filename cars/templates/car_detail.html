@@ -1,0 +1,283 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  .car-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .car-detail-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .car-detail-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+
+  .car-detail-header .breadcrumb {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .car-detail-header .breadcrumb a {
+    color: var(--accent-purple);
+    text-decoration: none;
+    transition: color var(--transition-hover);
+  }
+
+  .car-detail-header .breadcrumb a:hover {
+    color: var(--accent-cyan);
+  }
+
+  .car-detail-card {
+    background-color: var(--bg-panel);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 30px;
+  }
+
+  .car-image-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(
+      135deg,
+      var(--accent-purple),
+      var(--accent-cyan)
+    );
+    padding: 4px;
+  }
+
+  .car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: calc(var(--border-radius) - 4px);
+    display: block;
+  }
+
+  .car-info {
+    padding: 30px;
+  }
+
+  .car-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  .car-specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .spec-item {
+    background-color: var(--bg-main);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(127, 0, 255, 0.2);
+    transition: all var(--transition-hover);
+  }
+
+  .spec-item:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 15px rgba(127, 0, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .spec-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .spec-value {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .car-price {
+    background: linear-gradient(
+      135deg,
+      var(--accent-purple),
+      var(--accent-cyan)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--accent-purple);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-hover);
+    box-shadow: 0 4px 15px rgba(127, 0, 255, 0.3);
+  }
+
+  .btn:hover {
+    background-color: #5d00a0;
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--accent-cyan);
+    color: var(--bg-main);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+  }
+
+  .btn-danger {
+    background-color: #dc2626;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+  }
+
+  .btn-danger:hover {
+    background-color: #b91c1c;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+  }
+
+  @media (max-width: 768px) {
+    .car-detail-container {
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .car-detail-header h1 {
+      font-size: 2rem;
+    }
+
+    .car-image-container {
+      height: 300px;
+    }
+
+    .car-info {
+      padding: 20px;
+    }
+
+    .car-title {
+      font-size: 1.5rem;
+    }
+
+    .car-specs {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .car-price {
+      font-size: 1.8rem;
+    }
+
+    .buttons-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="car-detail-container">
+  <div class="car-detail-header">
+    <div class="breadcrumb">
+      <a href="{% url 'cars_list' %}">← Voltar para Galeria</a>
+    </div>
+    <h1>Detalhes do Veículo</h1>
+  </div>
+
+  <div class="car-detail-card">
+    <div class="car-image-container">
+      <img
+        src="{{ object.photo.url }}"
+        alt="{{ object.brand }} {{ object.model }}"
+        class="car-image"
+      />
+    </div>
+
+    <div class="car-info">
+      <h2 class="car-title">{{ object.brand }} {{ object.model }}</h2>
+
+      <div class="car-specs">
+        <div class="spec-item">
+          <div class="spec-label">Ano de Fabricação</div>
+          <div class="spec-value">{{ object.factory_year }}</div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">Ano do Modelo</div>
+          <div class="spec-value">{{ object.model_year }}</div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">Placa</div>
+          <div class="spec-value">{{ object.plate|upper }}</div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">Marca</div>
+          <div class="spec-value">{{ object.brand }}</div>
+        </div>
+      </div>
+
+      <div class="car-price">R$ {{ object.value|floatformat:2 }}</div>
+
+      <div class="buttons-container">
+        <a href="{% url 'cars_list' %}" class="btn btn-secondary">
+          ← Voltar à Galeria
+        </a>
+        {% if user.is_authenticated %}
+        <button class="btn" onclick="window.print()">
+          🖨️ Imprimir Detalhes
+        </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
