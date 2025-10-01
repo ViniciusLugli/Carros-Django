@@ -179,6 +179,32 @@
     box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
   }
 
+  /* Pequeno ajuste local para os botões na view de detalhes */
+  .detail-actions .detail-btn {
+    margin: 6px 8px;
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    min-width: 180px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+    transform: translateY(0);
+    transition: transform var(--transition-hover),
+      box-shadow var(--transition-hover);
+  }
+
+  .detail-actions .detail-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Garantir responsividade mantendo os estilos do container */
+  @media (max-width: 480px) {
+    .detail-actions .detail-btn {
+      width: 90%;
+      padding: 12px 18px;
+      font-size: 1rem;
+    }
+  }
+
   @media (max-width: 768px) {
     .car-detail-container {
       margin: 20px auto;
@@ -278,6 +304,14 @@
         {% endif %}
       </div>
     </div>
+  </div>
+  <div class="detail-actions" style="text-align: center; margin-top: 18px">
+    <a
+      href="{% url 'car_update' object.pk %}"
+      class="btn btn-primary detail-btn"
+      >✏️ Editar</a
+    >
+    <a href="#" class="btn btn-danger detail-btn">🗑️ Excluir</a>
   </div>
 </div>
 {% endblock %}
